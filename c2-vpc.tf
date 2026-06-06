@@ -61,6 +61,3 @@ resource "aws_route_table_association" "private_rt_ass" {
   subnet_id = each.value.id
 }
 
-resource "aws_e" "name" {
-  
-}
