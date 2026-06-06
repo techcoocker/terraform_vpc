@@ -11,7 +11,7 @@ variable "cidr" {
 }
 
 variable "tags" {
-  description = "Global tags to apply all resources Nino"
+  description = "Global tags to apply all resources"
 
   type = map(string)
   default = {
