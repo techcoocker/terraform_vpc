@@ -29,5 +29,34 @@ resource "aws_eip" "eip" {
 
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.eip.id
-  subnet_id = local.public_subnet
+  subnet_id = values(aws_subnet.public)[0].id
+}
+
+resource "aws_route_table" "public_rt" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.igw.id
+  }
+}
+
+resource "aws_route_table_association" "public_rt_ass" {
+  for_each = aws_subnet.public
+  route_table_id = aws_route_table.public_rt.id
+  subnet_id = each.value.id
+
+}
+
+resource "aws_route_table" "private_rt" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.nat.id
+  }
+}
+
+resource "aws_route_table_association" "private_rt_ass" {
+  route_table_id = aws_route_table.private_rt.id
+  for_each = aws_subnet.private
+  subnet_id = each.value.id
 }
