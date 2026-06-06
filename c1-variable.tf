@@ -15,7 +15,7 @@ variable "tags" {
 
   type = map(string)
   default = {
-    "Terraform" = "true"
+    Terraform = "true"
   }
 }
 
