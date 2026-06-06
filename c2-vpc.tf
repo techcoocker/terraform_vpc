@@ -60,3 +60,7 @@ resource "aws_route_table_association" "private_rt_ass" {
   for_each = aws_subnet.private
   subnet_id = each.value.id
 }
+
+resource "aws_e" "name" {
+  
+}
